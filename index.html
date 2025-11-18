@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actividad 2: Rueda de la Vida | INROADS</title>
     
-    <!-- Tailwind CSS para estilos rápidos y bonitos -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Librería para iconos -->
+    <!-- Iconos Lucide -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
-    <!-- Librería para exportar a PDF -->
+    <!-- Librería PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style>
-        /* Estilos personalizados para los sliders */
+        /* Estilos Sliders */
         input[type=range] {
             -webkit-appearance: none; 
             background: transparent; 
@@ -23,13 +23,13 @@
         
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            height: 16px;
-            width: 16px;
+            height: 20px; /* Más grande */
+            width: 20px;
             border-radius: 50%;
             background: currentColor;
             cursor: pointer;
-            margin-top: -6px; 
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            margin-top: -8px; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             transition: transform 0.1s;
         }
 
@@ -39,142 +39,135 @@
 
         input[type=range]::-webkit-slider-runnable-track {
             width: 100%;
-            height: 6px;
+            height: 8px; /* Más grueso */
             cursor: pointer;
             background: #e2e8f0;
             border-radius: 999px;
         }
         
+        /* La gráfica ahora puede crecer más */
         .chart-container svg {
-            max-width: 500px;
+            max-width: 750px; /* Aumentado de 500px a 750px */
             width: 100%;
             height: auto;
-            filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07));
+            filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.06));
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans min-h-screen p-4 md:p-8 pb-24">
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen p-4 lg:p-6 pb-24">
 
-    <!-- Contenedor Principal (Lo que se verá en el PDF) -->
-    <div id="document-container" class="max-w-5xl mx-auto bg-white shadow-2xl rounded-2xl overflow-hidden border border-slate-200 p-6 md:p-10">
+    <!-- Contenedor Principal Expandido -->
+    <div id="document-container" class="w-full max-w-[95%] 2xl:max-w-7xl mx-auto bg-white shadow-2xl rounded-3xl overflow-hidden border border-slate-200 p-6 lg:p-12">
         
         <!-- Encabezado -->
-        <div class="border-b border-slate-200 pb-6 mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <div class="border-b border-slate-200 pb-8 mb-10 flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6">
             <div>
-                <h1 class="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">Rueda de la Vida</h1>
-                <p class="text-slate-500 mt-2 text-lg">Programa de Mentorías Corporativas | INROADS México</p>
+                <h1 class="text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight mb-2">Rueda de la Vida</h1>
+                <p class="text-slate-500 text-xl">Programa de Mentorías Corporativas | INROADS México</p>
             </div>
-            <div class="w-full md:w-auto">
-                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Nombre del Mentee</label>
-                <div class="flex items-center bg-slate-50 rounded-xl px-4 py-3 border border-slate-200 focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-blue-50 transition-all">
-                    <i data-lucide="user" class="w-5 h-5 text-slate-400 mr-3"></i>
+            <div class="w-full lg:w-auto lg:min-w-[350px]">
+                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Mentee</label>
+                <div class="flex items-center bg-slate-50 rounded-2xl px-5 py-4 border border-slate-200 focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-blue-50 transition-all shadow-sm">
+                    <i data-lucide="user" class="w-6 h-6 text-slate-400 mr-3"></i>
                     <input 
                         type="text" 
                         id="menteeName" 
-                        placeholder="Escribe tu nombre aquí..." 
-                        class="bg-transparent border-none outline-none w-full text-slate-800 font-medium placeholder-slate-400 text-lg"
+                        placeholder="Escribe tu nombre completo..." 
+                        class="bg-transparent border-none outline-none w-full text-slate-800 font-semibold placeholder-slate-400 text-xl"
                     >
                 </div>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <!-- Layout Grid: Modificado el ratio para dar más espacio a la gráfica -->
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-12 xl:gap-16">
             
-            <!-- Columna Izquierda: Gráfico -->
-            <div class="flex flex-col items-center">
-                <div class="chart-container bg-slate-50 rounded-3xl p-6 border border-slate-100 w-full flex justify-center relative bg-gradient-to-br from-white to-slate-50">
-                    <!-- El SVG se generará aquí mediante JavaScript -->
+            <!-- Columna Izquierda: Gráfico (Ocupa 7 de 12 columnas en pantallas grandes) -->
+            <div class="xl:col-span-7 flex flex-col items-center">
+                <div class="chart-container bg-gradient-to-br from-slate-50 to-white rounded-[2.5rem] p-4 lg:p-8 border border-slate-100 w-full flex justify-center relative shadow-inner">
+                    <!-- El SVG se generará aquí -->
                     <div id="wheel-chart"></div>
                 </div>
-                <p class="text-sm text-slate-400 mt-4 text-center italic flex items-center gap-2">
-                    <i data-lucide="mouse-pointer-click" class="w-4 h-4"></i>
-                    Haz clic en los puntos grises o usa los controles
+                <p class="text-slate-400 mt-6 text-center italic flex items-center gap-2 text-lg">
+                    <i data-lucide="mouse-pointer-click" class="w-5 h-5"></i>
+                    Haz clic directamente en los puntos para editar
                 </p>
             </div>
 
-            <!-- Columna Derecha: Controles -->
-            <div class="space-y-6">
-                <div class="bg-blue-50 p-5 rounded-xl border border-blue-100 flex gap-4">
-                    <div class="bg-blue-100 p-2 rounded-full h-fit">
-                        <i data-lucide="info" class="w-5 h-5 text-blue-600"></i>
+            <!-- Columna Derecha: Controles (Ocupa 5 de 12 columnas) -->
+            <div class="xl:col-span-5 flex flex-col justify-center space-y-8">
+                
+                <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex gap-5 shadow-sm">
+                    <div class="bg-blue-100 p-3 rounded-xl h-fit shrink-0">
+                        <i data-lucide="info" class="w-6 h-6 text-blue-600"></i>
                     </div>
                     <div>
-                        <h3 class="text-blue-900 font-bold mb-1 text-lg">Instrucciones</h3>
-                        <p class="text-blue-800 text-sm leading-relaxed opacity-90">
-                            Usa los botones <strong>+</strong> y <strong>-</strong> para ajustar tu nivel de satisfacción (1-10) en cada área.
+                        <h3 class="text-blue-900 font-bold mb-2 text-xl">Instrucciones</h3>
+                        <p class="text-blue-800/80 text-base leading-relaxed">
+                            Usa los botones <strong>+</strong> y <strong>-</strong> o desliza las barras para ajustar tu nivel de satisfacción (1-10). Busca que la rueda gire suavemente.
                         </p>
                     </div>
                 </div>
 
-                <div id="sliders-container" class="space-y-4 pr-2">
-                    <!-- Los sliders se generarán aquí mediante JavaScript -->
+                <div id="sliders-container" class="space-y-5">
+                    <!-- Sliders generados por JS -->
+                </div>
+
+                <!-- Análisis rápido integrado aquí -->
+                <div class="grid grid-cols-2 gap-4 mt-4">
+                    <div class="bg-green-50 p-4 rounded-2xl border border-green-100">
+                        <span class="block text-xs font-bold text-green-600 uppercase tracking-wider mb-1">Más Fuerte</span>
+                        <span id="max-area" class="text-lg font-bold text-green-900">--</span>
+                    </div>
+                    <div class="bg-orange-50 p-4 rounded-2xl border border-orange-100">
+                        <span class="block text-xs font-bold text-orange-600 uppercase tracking-wider mb-1">Por Mejorar</span>
+                        <span id="min-area" class="text-lg font-bold text-orange-900">--</span>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Footer / Análisis -->
-        <div class="mt-12 pt-8 border-t border-slate-200">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-green-50 p-4 rounded-xl border border-green-100 flex items-center justify-between">
-                    <div>
-                        <span class="block text-xs font-bold text-green-600 uppercase tracking-wider mb-1">Fortaleza Principal</span>
-                        <span id="max-area" class="text-lg font-bold text-green-900">--</span>
-                    </div>
-                    <div class="bg-green-200 p-2 rounded-lg">
-                        <i data-lucide="trending-up" class="w-5 h-5 text-green-700"></i>
-                    </div>
-                </div>
-                <div class="bg-orange-50 p-4 rounded-xl border border-orange-100 flex items-center justify-between">
-                    <div>
-                        <span class="block text-xs font-bold text-orange-600 uppercase tracking-wider mb-1">Área de Oportunidad</span>
-                        <span id="min-area" class="text-lg font-bold text-orange-900">--</span>
-                    </div>
-                    <div class="bg-orange-200 p-2 rounded-lg">
-                        <i data-lucide="target" class="w-5 h-5 text-orange-700"></i>
-                    </div>
-                </div>
-            </div>
+        <!-- Footer simple (ya no necesita el análisis porque lo movimos arriba) -->
+        <div class="mt-16 pt-8 border-t border-slate-100 text-center text-slate-400 text-sm">
+            Herramienta interactiva generada para el programa de Mentoring INROADS.
         </div>
     </div>
 
-    <!-- Botón Flotante de Exportación -->
-    <div class="fixed bottom-6 right-6 z-50">
-        <button onclick="exportPDF()" class="flex items-center gap-3 px-8 py-4 rounded-full shadow-2xl font-bold text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transition-all transform hover:-translate-y-1 hover:shadow-blue-500/30 group">
-            <i data-lucide="download" class="w-5 h-5 group-hover:animate-bounce"></i>
+    <!-- Botón Flotante (Más grande) -->
+    <div class="fixed bottom-8 right-8 z-50">
+        <button onclick="exportPDF()" class="flex items-center gap-4 px-10 py-5 rounded-full shadow-2xl font-bold text-white text-lg bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transition-all transform hover:-translate-y-1 hover:shadow-blue-600/40 group">
+            <i data-lucide="download" class="w-6 h-6 group-hover:animate-bounce"></i>
             <span>Descargar PDF</span>
         </button>
     </div>
 
     <script>
-        // --- Configuración Inicial ---
-        const size = 450;
+        // --- Configuración (Aumentamos el tamaño base para mayor resolución) ---
+        const size = 700; // Antes 450
         const center = size / 2;
-        const radius = (size / 2) - 60; // Margen para etiquetas
+        const radius = (size / 2) - 80; // Margen ajustado
         
-        // Estado de la aplicación (Valores iniciales seteados en 1)
         let categories = [
-            { id: 'profesion', label: 'Profesión', value: 1, color: '#1e40af' }, // Blue
-            { id: 'dinero', label: 'Dinero', value: 1, color: '#15803d' }, // Green
-            { id: 'amor', label: 'Amor', value: 1, color: '#be123c' }, // Rose
-            { id: 'familia', label: 'Familia', value: 1, color: '#a21caf' }, // Purple
-            { id: 'desarrollo', label: 'Desarrollo', value: 1, color: '#c2410c' }, // Orange
-            { id: 'ocio', label: 'Ocio', value: 1, color: '#eab308' }, // Yellow
-            { id: 'amigos', label: 'Amigos', value: 1, color: '#0ea5e9' }, // Sky
-            { id: 'salud', label: 'Salud', value: 1, color: '#ef4444' }, // Red
+            { id: 'profesion', label: 'Profesión', value: 1, color: '#1e40af' },
+            { id: 'dinero', label: 'Dinero', value: 1, color: '#15803d' },
+            { id: 'amor', label: 'Amor', value: 1, color: '#be123c' },
+            { id: 'familia', label: 'Familia', value: 1, color: '#a21caf' },
+            { id: 'desarrollo', label: 'Desarrollo', value: 1, color: '#c2410c' },
+            { id: 'ocio', label: 'Ocio', value: 1, color: '#eab308' },
+            { id: 'amigos', label: 'Amigos', value: 1, color: '#0ea5e9' },
+            { id: 'salud', label: 'Salud', value: 1, color: '#ef4444' },
         ];
 
         const angleSlice = (Math.PI * 2) / categories.length;
 
-        // --- Funciones Matemáticas ---
         function getCoordinates(value, index) {
-            const angle = (index * angleSlice) - (Math.PI / 2); // -90 grados para empezar a las 12
+            const angle = (index * angleSlice) - (Math.PI / 2);
             const r = (value / 10) * radius;
             const x = center + r * Math.cos(angle);
             const y = center + r * Math.sin(angle);
             return { x, y };
         }
 
-        // --- Renderizado ---
         function renderChart() {
             const container = document.getElementById('wheel-chart');
             const polyPoints = categories.map((cat, i) => {
@@ -184,62 +177,58 @@
 
             let svgContent = `
                 <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
-                    <!-- Filtro para sombra -->
                     <defs>
                         <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                            <feGaussianBlur stdDeviation="2" result="blur" />
+                            <feGaussianBlur stdDeviation="3" result="blur" />
                             <feComposite in="SourceGraphic" in2="blur" operator="over" />
                         </filter>
                     </defs>
             `;
 
-            // 1. Círculos concéntricos (Niveles 2, 4, 6, 8, 10)
+            // Grid Circular
             [2, 4, 6, 8, 10].forEach(level => {
                 const r = (level / 10) * radius;
-                svgContent += `<circle cx="${center}" cy="${center}" r="${r}" fill="none" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="4 4" />`;
+                svgContent += `<circle cx="${center}" cy="${center}" r="${r}" fill="none" stroke="#e2e8f0" stroke-width="2" stroke-dasharray="6 6" />`;
             });
 
-            // 2. Líneas de los ejes
+            // Ejes
             categories.forEach((_, i) => {
                 const coords = getCoordinates(10, i);
-                svgContent += `<line x1="${center}" y1="${center}" x2="${coords.x}" y2="${coords.y}" stroke="#cbd5e1" stroke-width="1" />`;
+                svgContent += `<line x1="${center}" y1="${center}" x2="${coords.x}" y2="${coords.y}" stroke="#cbd5e1" stroke-width="1.5" />`;
             });
 
-            // 3. El Polígono (Área rellena)
-            // Si todos son 0 o 1, el polígono es muy pequeño
+            // Polígono
             svgContent += `
-                <polygon points="${polyPoints}" fill="rgba(37, 99, 235, 0.15)" stroke="#2563eb" stroke-width="3" stroke-linejoin="round" style="filter: drop-shadow(0 4px 6px rgba(37, 99, 235, 0.2)); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);" />
+                <polygon points="${polyPoints}" fill="rgba(37, 99, 235, 0.15)" stroke="#2563eb" stroke-width="4" stroke-linejoin="round" style="filter: drop-shadow(0 8px 12px rgba(37, 99, 235, 0.2)); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);" />
             `;
 
-            // 4. Puntos Interactivos y Etiquetas
+            // Puntos y Etiquetas
             categories.forEach((cat, i) => {
-                // Generar 10 puntos clicables por eje
                 for (let val = 1; val <= 10; val++) {
                     const coords = getCoordinates(val, i);
                     const isSelected = val === cat.value;
                     
-                    // Zona de clic invisible (más grande) y punto visible
+                    // Área de clic (más grande: radio 14) y punto visual
                     svgContent += `
                         <g onclick="updateValue(${i}, ${val})" style="cursor: pointer;">
-                            <circle cx="${coords.x}" cy="${coords.y}" r="10" fill="transparent" />
-                            <circle cx="${coords.x}" cy="${coords.y}" r="${isSelected ? 6 : 2.5}" fill="${isSelected ? cat.color : '#cbd5e1'}" style="transition: all 0.2s ease;" />
+                            <circle cx="${coords.x}" cy="${coords.y}" r="14" fill="transparent" /> 
+                            <circle cx="${coords.x}" cy="${coords.y}" r="${isSelected ? 8 : 3}" fill="${isSelected ? cat.color : '#cbd5e1'}" style="transition: all 0.2s ease;" />
                         </g>
                     `;
                 }
 
-                // Etiquetas de texto
+                // Etiquetas (más lejos y más grandes)
                 const labelAngle = (i * angleSlice) - (Math.PI / 2);
-                const labelDist = radius + 30;
+                const labelDist = radius + 45; // Más lejos para evitar solapamiento
                 const lx = center + labelDist * Math.cos(labelAngle);
                 const ly = center + labelDist * Math.sin(labelAngle);
                 
-                // Ajuste de ancla de texto según posición
                 let anchor = 'middle';
-                if (lx > center + 20) anchor = 'start';
-                if (lx < center - 20) anchor = 'end';
+                if (lx > center + 30) anchor = 'start';
+                if (lx < center - 30) anchor = 'end';
 
                 svgContent += `
-                    <text x="${lx}" y="${ly}" text-anchor="${anchor}" dominant-baseline="middle" fill="#475569" font-size="12" font-weight="700" font-family="sans-serif">${cat.label}</text>
+                    <text x="${lx}" y="${ly}" text-anchor="${anchor}" dominant-baseline="middle" fill="#334155" font-size="16" font-weight="800" font-family="sans-serif">${cat.label}</text>
                 `;
             });
 
@@ -250,113 +239,87 @@
         function renderSliders() {
             const container = document.getElementById('sliders-container');
             container.innerHTML = categories.map((cat, index) => `
-                <div class="flex items-center gap-3 group bg-white p-2 rounded-lg hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100">
-                    <!-- Label -->
-                    <div class="w-24 md:w-28 text-sm font-bold text-slate-600 group-hover:text-blue-700 transition-colors truncate" title="${cat.label}">
+                <div class="flex items-center gap-4 group bg-white p-3 rounded-xl hover:bg-slate-50 transition-all border border-transparent hover:border-slate-200 shadow-sm">
+                    <div class="w-28 text-base font-bold text-slate-600 group-hover:text-blue-700 transition-colors truncate" title="${cat.label}">
                         ${cat.label}
                     </div>
 
-                    <!-- Controles -->
-                    <div class="flex-1 flex items-center gap-3">
-                        <!-- Botón Menos -->
+                    <div class="flex-1 flex items-center gap-4">
                         <button 
                             onclick="updateValue(${index}, Math.max(1, ${cat.value} - 1))"
-                            class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-600 font-bold flex items-center justify-center transition-all focus:outline-none focus:ring-2 focus:ring-slate-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                            class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold flex items-center justify-center transition-all focus:outline-none disabled:opacity-50"
                             ${cat.value <= 1 ? 'disabled' : ''}
                         >
-                            <i data-lucide="minus" class="w-4 h-4"></i>
+                            <i data-lucide="minus" class="w-5 h-5"></i>
                         </button>
 
-                        <!-- Slider -->
-                        <div class="flex-1 relative flex items-center h-8">
+                        <div class="flex-1 relative flex items-center h-10">
                             <input 
                                 type="range" 
                                 min="1" 
                                 max="10" 
                                 value="${cat.value}" 
                                 oninput="updateValue(${index}, parseInt(this.value))"
-                                class="w-full h-2 rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all"
+                                class="w-full h-3 rounded-full appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all"
                                 style="color: ${cat.color}; background: linear-gradient(to right, ${cat.color} 0%, ${cat.color} ${(cat.value - 1) * 100 / 9}%, #e2e8f0 ${(cat.value - 1) * 100 / 9}%, #e2e8f0 100%);"
                             >
                         </div>
 
-                        <!-- Botón Más -->
                         <button 
                             onclick="updateValue(${index}, Math.min(10, ${cat.value} + 1))"
-                            class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-600 font-bold flex items-center justify-center transition-all focus:outline-none focus:ring-2 focus:ring-slate-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                            class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold flex items-center justify-center transition-all focus:outline-none disabled:opacity-50"
                              ${cat.value >= 10 ? 'disabled' : ''}
                         >
-                            <i data-lucide="plus" class="w-4 h-4"></i>
+                            <i data-lucide="plus" class="w-5 h-5"></i>
                         </button>
                     </div>
 
-                    <!-- Valor Numérico -->
-                    <div class="w-10 h-10 rounded-xl flex items-center justify-center text-base font-bold text-white shadow-md transition-transform transform group-hover:scale-110 ml-1" style="background-color: ${cat.color}">
+                    <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl font-bold text-white shadow-md transition-transform transform group-hover:scale-110 ml-2" style="background-color: ${cat.color}">
                         ${cat.value}
                     </div>
                 </div>
             `).join('');
-            
-            // Importante: Reinicializar iconos después de inyectar nuevo HTML
             lucide.createIcons();
         }
 
         function updateAnalysis() {
-            // Si todos son 1, mostramos texto por defecto
             const allOne = categories.every(c => c.value === 1);
             if (allOne) {
-                document.getElementById('max-area').textContent = "Por definir";
-                document.getElementById('min-area').textContent = "Por definir";
-                document.getElementById('max-area').className = "text-lg font-bold text-slate-400 italic";
-                document.getElementById('min-area').className = "text-lg font-bold text-slate-400 italic";
+                document.getElementById('max-area').textContent = "-";
+                document.getElementById('min-area').textContent = "-";
                 return;
             }
 
-            // Encontrar área mayor y menor
-            // Usamos reduce para mantener el objeto completo
-            let max = categories[0];
-            let min = categories[0];
-
+            let max = categories[0], min = categories[0];
             categories.forEach(c => {
                 if (c.value > max.value) max = c;
                 if (c.value < min.value) min = c;
             });
             
-            const maxEl = document.getElementById('max-area');
-            const minEl = document.getElementById('min-area');
-
-            maxEl.textContent = max.label + ` (${max.value})`;
-            minEl.textContent = min.label + ` (${min.value})`;
-            
-            // Resetear colores
-            maxEl.className = "text-lg font-bold text-green-900";
-            minEl.className = "text-lg font-bold text-orange-900";
+            document.getElementById('max-area').textContent = `${max.label} (${max.value})`;
+            document.getElementById('min-area').textContent = `${min.label} (${min.value})`;
         }
 
-        // --- Lógica de Actualización ---
         window.updateValue = function(index, newValue) {
-            // Asegurar límites
             if (newValue < 1) newValue = 1;
             if (newValue > 10) newValue = 10;
-
             categories[index].value = newValue;
             renderChart();
             renderSliders(); 
             updateAnalysis();
         };
 
-        // --- Exportar PDF ---
         window.exportPDF = function() {
             const element = document.getElementById('document-container');
             const name = document.getElementById('menteeName').value || 'Mentee';
             
-            // Opciones para html2pdf
+            // Opciones para html2pdf (Ajustado para el nuevo tamaño)
             const opt = {
-                margin:       [0.2, 0.2, 0.2, 0.2], 
+                margin:       0.2, 
                 filename:     `Rueda_Vida_${name.replace(/\s+/g, '_')}.pdf`,
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { scale: 2, useCORS: true, scrollY: 0 },
-                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+                jsPDF:        { unit: 'in', format: 'a4', orientation: 'landscape' } // Mejor landscape por el ancho
             };
 
             const btn = document.querySelector('button[onclick="exportPDF()"]');
@@ -370,7 +333,6 @@
             });
         };
 
-        // --- Inicialización ---
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons(); 
             renderChart();
